@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound,HttpResponseRedirect
 from django.urls import reverse
+from django.utils.safestring import mark_safe
+from django.template.loader import render_to_string
 # Create your views here.
 
 def font(text):
@@ -19,6 +21,14 @@ def font(text):
                         font-size: 33px;
                         color: #333;
                     }}
+                    
+                    li {{
+                        font-family: Calibri, sans-serif;
+                        font-size: 33px;
+                        color: #FFA600;
+                    }}
+                    
+                    
                 </style>
             </head>
             <body>
@@ -46,7 +56,16 @@ monthly_challenges={
 
 
 def index(request):
-    return HttpResponse(font("Hello, world. You're at the polls index."))
+    list_items=""
+    months=list(monthly_challenges.keys())
+    for month in months:
+        capitilized_month=month.capitalize()
+        month_path=reverse("month-challenge", args=[month]) #/challenge
+        list_items += f"""
+        <li><a href="{month_path}"> {capitilized_month} </a></li>
+        """
+    response_data = f"<ol>{list_items}</ol>"
+    return HttpResponse(font(mark_safe(response_data)))
 
 def monthly_challenge_by_number(request,month):
 
@@ -62,7 +81,9 @@ def monthly_challenge_by_number(request,month):
 def monthly_challenge(request,month):
     try:
         challenge_text=monthly_challenges[month]
+        render_data=render_to_string("challenges/challenge.html",{"context":challenge_text})
+        return HttpResponse(render_data)
     except:
         return HttpResponseNotFound("Sorry, that month does not exist.")
-    return HttpResponse(font(challenge_text))
+
 
