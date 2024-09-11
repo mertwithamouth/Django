@@ -5,39 +5,7 @@ from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 # Create your views here.
 
-def font(text):
-    html_content = f'''
-        <html>
-            <head>
-                <style>
-                    p {{
-                        font-family: Arial, sans-serif;
-                        font-size: 25 px;
-                        color: #f32b00;
-                    }}
 
-                    h1 {{
-                        font-family: Calibri, sans-serif;
-                        font-size: 33px;
-                        color: #333;
-                    }}
-                    
-                    li {{
-                        font-family: Calibri, sans-serif;
-                        font-size: 33px;
-                        color: #FFA600;
-                    }}
-                    
-                    
-                </style>
-            </head>
-            <body>
-                <h1>Merhaba, Django!</h1>
-                <p>{text}</p>
-            </body>
-        </html>
-        '''
-    return html_content
 
 monthly_challenges={
     "january":"January is Mary",
@@ -65,7 +33,9 @@ def index(request):
         <li><a href="{month_path}"> {capitilized_month} </a></li>
         """
     response_data = f"<ol>{list_items}</ol>"
-    return HttpResponse(font(mark_safe(response_data)))
+    #return HttpResponse((response_data))
+    return render(request, "challenges/challenge.html",
+           {"var": response_data})
 
 def monthly_challenge_by_number(request,month):
 
@@ -83,7 +53,7 @@ def monthly_challenge(request,month):
         challenge_text=monthly_challenges[month]
         return render(request,"challenges/challenge.html",
                       {  "text":challenge_text,
-                                "month_name":month.capitalize()})
+                                "month_name":month})
 
     except:
         return HttpResponseNotFound("Sorry, that month does not exist.")
