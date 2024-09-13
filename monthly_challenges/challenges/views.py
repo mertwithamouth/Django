@@ -32,16 +32,18 @@ def index(request):
         list_items += f"""
         <li><a href="{month_path}"> {capitilized_month} </a></li>
         """
-    response_data = f"<ol>{list_items}</ol>"
-    #return HttpResponse((response_data))
-    return render(request, "challenges/challenge.html",
-           {"var": response_data})
+    response_data = f"<ul>{list_items}</ul>"
+
+    return render(request, "challenges/index.html",
+                  {"var": response_data})
+
+
 
 def monthly_challenge_by_number(request,month):
 
     months=list(monthly_challenges.keys())
     if month > len(months):
-        return HttpResponseNotFound("Invalid month")
+        return HttpResponseNotFound("Invalid mocdnth")
 
     redirect_month=months[month-1]
     redirect_path=reverse("month-challenge", args=[redirect_month]) #/challenge
