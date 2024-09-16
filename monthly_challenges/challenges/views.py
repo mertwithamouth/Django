@@ -19,23 +19,14 @@ monthly_challenges={
     "september":"September is time for Berber",
     "october":"October is time to be Derbeder ",
     "november":"November is time to be in Cember",
-    "december":"December is time eat Pastırma's Ceper",
+    "december":None
 }
 
 
 def index(request):
-    list_items=""
     months=list(monthly_challenges.keys())
-    for month in months:
-        capitilized_month=month.capitalize()
-        month_path=reverse("month-challenge", args=[month]) #/challenge
-        list_items += f"""
-        <li><a href="{month_path}"> {capitilized_month} </a></li>
-        """
-    response_data = f"<ul>{list_items}</ul>"
-
     return render(request, "challenges/index.html",
-                  {"var": response_data})
+                  {"months": months})
 
 
 
@@ -43,7 +34,7 @@ def monthly_challenge_by_number(request,month):
 
     months=list(monthly_challenges.keys())
     if month > len(months):
-        return HttpResponseNotFound("Invalid mocdnth")
+        return render(request, "404_page.html")
 
     redirect_month=months[month-1]
     redirect_path=reverse("month-challenge", args=[redirect_month]) #/challenge
@@ -58,6 +49,8 @@ def monthly_challenge(request,month):
                                 "month_name":month})
 
     except:
-        return HttpResponseNotFound("Sorry, that month does not exist.")
+        return render(request, "404_page.html")
+
+
 
 

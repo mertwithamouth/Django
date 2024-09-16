@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style>
+{% extends "base.html" %}
+
+{%  block css_style %}
                     p {
                         font-family: Arial, sans-serif;
                         font-size: 30px;
@@ -14,24 +13,30 @@
                         color: #333;
                     }
 
-                    li {
-                        font-family: Calibri, sans-serif;
-                        font-size: 33px;
-                        color: #e28f00;
+                    .navigator a{
+
+                        font-size: 25px;
+                        display: block;
+                        margin-left: 50%;
+
+
+
                     }
+{%  endblock %}
 
+{%  block page_title %}
+        Monthly Challenge
+{%  endblock %}
 
+{%  block content %}
+    {%  include "challenges/includes/header.html" %}
 
-    </style>
-    <meta charset="UTF-8">
-    <title>Monthly Challenge</title>
-</head>
-<body>
-    <h1>{{month_name | title }}'s Challenge</h1>
-    <h2></h2>
-    <p>{{text}}</p>
-    {{var|safe|escape}}
+        <h1>{{month_name | title }}'s Challenge</h1>
+    {%  if text == None %}
+            <p>There is no challenge yet!</p>
 
-
-</body>
-</html>
+    {%  elif text != None %}
+            <p>{{text}}</p>
+            {{var|safe|escape}}
+    {%  endif %}
+{%  endblock %}
