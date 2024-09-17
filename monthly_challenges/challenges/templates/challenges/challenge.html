@@ -1,27 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
 
 {%  block css_style %}
-                    p {
-                        font-family: Arial, sans-serif;
-                        font-size: 30px;
-                        color: #f32b00;
-                    }
-
-                    h1 {
-                        font-family: Calibri, sans-serif;
-                        font-size: 33px;
-                        color: #333;
-                    }
-
-                    .navigator a{
-
-                        font-size: 25px;
-                        display: block;
-                        margin-left: 50%;
-
-
-
-                    }
+    <link rel="stylesheet" href="{% static "challenges/challenges.css" %}">
+    <link rel="stylesheet" href="{% static "challenges/includes/header.css" %}">
 {%  endblock %}
 
 {%  block page_title %}
