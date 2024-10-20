@@ -10,4 +10,13 @@
     </a>
     {% endfor %}
 </ul>
+
+<hr>
+<p>
+   Number Of Books: {{number_of_books}}
+</p>
+<p>
+    Average Rating: {{avgerage_rating.rating__avg|floatformat:1}}
+</p>
+
 {% endblock %}
