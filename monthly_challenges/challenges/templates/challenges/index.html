@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%  block css_style %}
+        <link rel="stylesheet" href="{% static "challenges/index.css" %}">
+{%  endblock %}
+
+{%  block page_title %}
+        Monthly Challenge
+{%  endblock %}
+
+{%  block content %}
+        <h1>Pick A Month and Find Your Challenge</h1>
+        <ol class="rounded-list">
+            {% for month in months %}
+                <li><a href ="{% url "month-challenge" month %}">{{month | title}}</a> </li>
+            {% endfor %}
+        </ol>
+
+{%  endblock %}
