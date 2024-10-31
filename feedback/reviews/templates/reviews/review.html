@@ -5,10 +5,10 @@
     <title>Your Form</title>
 </head>
 <body>
-    <form method="GET">
+    <form action="thank-you" method="POST">
+        {% csrf_token %}
         <label for="username">Your Username</label>
         <input type="text" name="username" id="username">
         <button>Submıt</button>
     </form>
-
 </body>
