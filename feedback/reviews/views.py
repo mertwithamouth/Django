@@ -2,8 +2,30 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 from .forms import ReviewForm
 from .models import Review
+
+
+
+class ReviewView(CreateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'reviews/review.html'
+    success_url = '/thank-you'
+
+'''
+class ReviewView(FormView):
+    form_class = ReviewForm
+    template_name = 'reviews/review.html'
+    success_url = '/thank-you'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+'''
+'''
 class ReviewView(View):
     def get(self, request, *args, **kwargs):
         form = ReviewForm()
@@ -16,6 +38,8 @@ class ReviewView(View):
             return HttpResponseRedirect('/thank-you')
         return render(request, 'reviews/review.html',
                       {'form': form})
+'''
+
 '''
 def review(request):
     if request.method == 'POST':
@@ -63,8 +87,15 @@ class ReviewListView(ListView):
     #     return data
 
 
+class SingleReviewView(DetailView):
+    template_name="reviews/single_review.html"
+    model = Review
+    pk_url_kwarg = 'id'
 
 
+
+
+'''
 class SingleReviewView(TemplateView):
     template_name="reviews/single_review.html"
 
@@ -74,3 +105,4 @@ class SingleReviewView(TemplateView):
         selected_review=Review.objects.get(pk=review_id)
         context['review']=selected_review
         return context
+'''
