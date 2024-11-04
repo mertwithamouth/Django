@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="{% static "profiles/styles.css" %}">
 </head>
 <body>
-    <form>
-        <input type="file">
+    <form action="/profiles/create-profile" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
         <button>Upload</button>
     </form>
 
